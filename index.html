@@ -1,39 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cup to Grams Converter | UK Baking Calculator</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Untitled</title>
-    <link rel="stylesheet" href="./style.css">
+  <!-- Top Ad Placement Spacer -->
+  <div class="ad-container top-ad">
+    <p class="ad-label">Advertisement</p>
+    <div class="ad-mock">[ 728x90 Top Banner Ad Place ]</div>
+  </div>
 
-  </head>
+  <!-- The Calculator Visual Box -->
+  <main class="calculator-card">
+    <h1>Baking Weight Converter</h1>
+    <p class="subtitle">Real-time brand-accurate conversions</p>
+
+    <!-- NEW FROM & TO UNIT DROPDOWNS -->
+    <div class="unit-row">
+      <div class="input-group">
+        <label for="fromUnit">Convert From</label>
+        <select id="fromUnit">
+          <option value="cup">Cup (cup)</option>
+          <option value="tbsp">Tablespoon (tbsp)</option>
+          <option value="tsp">Teaspoon (tsp)</option>
+          <option value="mL">Milliliter (mL)</option>
+          <option value="fl_oz">Fluid Ounce (fl oz)</option>
+          <option value="g">Gram (g)</option>
+          <option value="oz">Ounce (oz)</option>
+          <option value="lb">Pound (lb)</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="toUnit">Convert To</label>
+        <select id="toUnit">
+          <option value="g" selected>Gram (g)</option>
+          <option value="cup">Cup (cup)</option>
+          <option value="tbsp">Tablespoon (tbsp)</option>
+          <option value="tsp">Teaspoon (tsp)</option>
+          <option value="mL">Milliliter (mL)</option>
+          <option value="fl_oz">Fluid Ounce (fl oz)</option>
+          <option value="oz">Ounce (oz)</option>
+          <option value="lb">Pound (lb)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="ingredient">1. Select Ingredient</label>
+      <select id="ingredient"></select>
+    </div>
+
+    <div class="input-group">
+      <label for="brand">2. Select Brand</label>
+      <select id="brand"></select>
+    </div>
+
+    <!-- CONTAINER FOR THE CUP SIZE QUESTION -->
+    <div class="input-group" id="cup-type-container">
+      <label for="cupType">3. Measuring Cup Standard</label>
+      <select id="cupType">
+        <option value="usCustomary">US Customary Cup (236.588 mL)</option>
+        <option value="usLegal">US Legal Cup (240 mL)</option>
+        <option value="metric">Metric Cup / Modern UK (250 mL)</option>
+        <option value="imperial">Imperial Cup / Vintage UK (284.131 mL)</option>
+        <option value="australian">Australian Cup (250 mL)</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label id="input-label" for="volume">4. Amount</label>
+      <input type="number" id="volume" value="1" min="0" step="0.25">
+    </div>
+
+    <!-- THE INSTANT RESULT DISPLAY -->
+    <div class="result-box">
+      <span id="output-value">120</span>
+      <span id="output-unit" class="unit">grams</span>
+    </div>
+  </main>
+
+  <!-- Bottom Ad Placement Spacer -->
+  <div class="ad-container bottom-ad">
+    <p class="ad-label">Advertisement</p>
+    <div class="ad-mock">[ 300x250 Lower Banner Ad Place ]</div>
+  </div>
+
+  <!-- SEO SEARCH ENGINE OPTIMIZATION EXTRA CONTENT SECTION -->
+  <section style="max-width: 480px; margin: 40px auto; padding: 25px; line-height: 1.7; color: #4e445c; font-family: sans-serif; background: rgba(255, 255, 255, 0.6); border-radius: 16px; border: 1px solid #eedec9;">
+    <h2 style="color: #512da8; font-size: 20px; margin-top: 0; font-weight: 800;">How to Convert Cups to Grams for UK Baking Recipes</h2>
+    <p>Converting measurements accurately is the absolute secret to successful baking. While modern British recipes rely heavily on metric weight measurements like grams (g), vintage UK cookbooks and international recipes frequently use volume measurements like cups. This creates confusion because a cup is not a universal unit of measurement across the world.</p>
     
-  <body>
-  <!-- Top Ad Placement Spacer --> <div class="ad-container top-ad"> <p class="ad-label">Advertisement</p> <div class="ad-mock">[ 728x90 Top Banner Ad Place ]</div> </div> <!-- The Calculator Visual Box --> <main class="calculator-card"> <h1>Baking Weight Converter</h1> <p class="subtitle">Real-time brand-accurate conversions</p> <!-- NEW FROM & TO UNIT DROPDOWNS --> <div class="unit-row"> <div class="input-group"> <label for="fromUnit">Convert From</label> <select id="fromUnit"> <option value="cup">Cup (cup)</option> <option value="tbsp">Tablespoon (tbsp)</option> <option value="tsp">Teaspoon (tsp)</option> <option value="mL">Milliliter (mL)</option> <option value="fl_oz">Fluid Ounce (fl oz)</option> <option value="g">Gram (g)</option> <option value="oz">Ounce (oz)</option> <option value="lb">Pound (lb)</option> </select> </div> <div class="input-group"> <label for="toUnit">Convert To</label> <select id="toUnit"> <option value="g" selected>Gram (g)</option> <option value="cup">Cup (cup)</option> <option value="tbsp">Tablespoon (tbsp)</option> <option value="tsp">Teaspoon (tsp)</option> <option value="mL">Milliliter (mL)</option> <option value="fl_oz">Fluid Ounce (fl oz)</option> <option value="oz">Ounce (oz)</option> <option value="lb">Pound (lb)</option> </select> </div> </div> <div class="input-group"> <label for="ingredient">1. Select Ingredient</label> <select id="ingredient"></select> </div> <div class="input-group"> <label for="brand">2. Select Brand</label> <select id="brand"></select> </div> <!-- CONTAINER FOR THE CUP SIZE QUESTION --> <div class="input-group" id="cup-type-container"> <label for="cupType">3. Measuring Cup Standard</label> <select id="cupType"> <option value="usCustomary">US Customary Cup (236.588 mL)</option> <option value="usLegal">US Legal Cup (240 mL)</option> <option value="metric">Metric Cup / Modern UK (250 mL)</option> <option value="imperial">Imperial Cup / Vintage UK (284.131 mL)</option> <option value="australian">Australian Cup (250 mL)</option> </select> </div> <div class="input-group"> <label id="input-label" for="volume">4. Amount</label> <input type="number" id="volume" value="1" min="0" step="0.25"> </div> <!-- THE INSTANT RESULT DISPLAY --> <div class="result-box"> <span id="output-value">120</span> <span id="output-unit" class="unit">grams</span> </div> </main> <!-- Bottom Ad Placement Spacer --> <div class="ad-container bottom-ad"> <p class="ad-label">Advertisement</p> <div class="ad-mock">[ 300x250 Lower Banner Ad Place ]</div> </div>
-    <script  src="./script.js"></script>
-// CONTROL LOGIC FOR UK COMPLIANCE COOKIE POPUPS
-function togglePrivacyModal() {
-  const modal = document.getElementById('privacy-modal');
-  if (modal.style.display === "none" || modal.style.display === "") {
-    modal.style.display = "flex";
-  } else {
-    modal.style.display = "none";
-  }
-}
+    <h3 style="color: #b15d14; font-size: 15px; font-weight: 700; margin-bottom: 5px;">The Difference Between Modern UK and Vintage UK Cups</h3>
+    <p>If you are working with a modern British recipe that lists cups, it is referencing the standard <strong>Metric Cup</strong> which holds exactly 250 mL of volume. However, if you are baking from an older traditional heirloom cookbook, it likely requires an <strong>Imperial Cup</strong>, which measures 284.131 mL. Getting this wrong can completely ruin the texture of your bakes.</p>
+    
+    <h3 style="color: #b15d14; font-size: 15px; font-weight: 700; margin-bottom: 5px;">Why Brand-Specific Weights Matter</h3>
+    <p>Different baking ingredients have vastly varying densities. For instance, a single customary cup of tightly packed brown sugar can weigh up to 215 grams, whereas a cup of sifted cocoa powder weighs roughly 86 grams. </p>
+    <p>Furthermore, premium flour manufacturers mill their products differently; King Arthur flour packs down to roughly 120 grams per cup, while Gold Medal averages 125 grams. Using an interactive converter that accounts for regional cup volumes and specific ingredient brands ensures your cakes, bread, and pastries turn out perfectly every time.</p>
+  </section>
 
-function acceptCookies() {
-  // Hide the banner instantly when they click accept
-  document.getElementById('cookie-banner').style.display = 'none';
-  // Saves their choice for 30 days so it doesn't annoy them on return visits
-  localStorage.setItem('cookiesAccepted', 'true');
-}
+  <!-- UK DATA PRIVACY COMPLIANT COOKIE BANNER -->
+  <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; right: 0; background: #2a2338; color: #fff; padding: 15px 20px; text-align: center; font-size: 13px; font-weight: 500; box-shadow: 0 -4px 15px rgba(0,0,0,0.15); z-index: 9999; display: flex; flex-direction: column; align-items: center; gap: 10px; justify-content: center;">
+    <span>We use cookies to personalize content and ads, to provide social media features, and to analyze our traffic in accordance with UK data protection regulations.</span>
+    <div style="display: flex; gap: 10px;">
+      <button onclick="acceptCookies()" style="background: #a1edd0; color: #064e24; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer;">Accept Cookies</button>
+      <button onclick="togglePrivacyModal()" style="background: transparent; color: #eedec9; border: 1px solid #eedec9; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer;">View Privacy Policy</button>
+    </div>
+  </div>
 
-// Auto-hide banner on load if they already clicked accept previously
-window.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('cookiesAccepted') === 'true') {
-    document.getElementById('cookie-banner').style.display = 'none';
-  }
-});
-  </body>
-  
+  <!-- MANDATORY PRIVACY POLICY MODAL POPUP -->
+  <div id="privacy-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
+    <div style="background: #fffcf7; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 35px rgba(0,0,0,0.2); position: relative; font-family: sans-serif; line-height: 1.6; color: #333;">
+      <span onclick="togglePrivacyModal()" style="position: absolute; top: 15px; right: 20px; font-size: 24px; font-weight: bold; color: #b15d14; cursor: pointer;">&times;</span>
+      <h2 style="color: #512da8; margin-top: 0;">Privacy Policy for Cupstograms.co.uk</h2>
+      <p><strong>Effective Date: June 2026</strong></p>
+      <p>At Cupstograms.co.uk, the privacy of our visitors is of extreme importance to us. This privacy policy document outlines the types of personal information received and collected by our website and how it is used.</p>
+      <h3>Log Files & Cookie Data</h3>
+      <p>Like many other web sites, Cupstograms.co.uk makes use of log files. The information inside the log files includes internet protocol (IP) addresses, type of browser, Internet Service Provider (ISP), date/time stamp, referring/exit pages, and number of clicks to analyze trends, administer the site, track user’s movement around the site, and gather demographic information.</p>
+      <h3>Google AdSense & Third-Party Advertising</h3>
+      <p>Google, as a third-party vendor, uses cookies to serve ads on Cupstograms.co.uk. Google’s use of advertising cookies enables it to serve ads to users based on their visit to our site and other sites on the Internet. Users may opt out of personalized advertising by visiting Google Ad Settings.</p>
+      <p>Our third-party ad servers or ad networks use technology to send the advertisements and links that appear on Cupstograms.co.uk directly to your browsers. They automatically receive your IP address when this occurs. Other technologies (such as cookies, JavaScript, or Web Beacons) may also be used by the third-party ad networks to measure the effectiveness of their advertisements and/or to personalize the advertising content that you see.</p>
+      <button onclick="togglePrivacyModal()" style="background: #512da8; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; width: 100%; margin-top: 20px; cursor: pointer;">Close Policy</button>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
 </html>
