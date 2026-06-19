@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!-- Top Ad Placement Spacer --> <div class="ad-container top-ad"> <p class="ad-label">Advertisement</p> <div class="ad-mock">[ 728x90 Top Banner Ad Place ]</div> </div> <!-- The Calculator Visual Box --> <main class="calculator-card"> <h1>Baking Weight Converter</h1> <p class="subtitle">Real-time brand-accurate conversions</p> <!-- NEW FROM & TO UNIT DROPDOWNS --> <div class="unit-row"> <div class="input-group"> <label for="fromUnit">Convert From</label> <select id="fromUnit"> <option value="cup">Cup (cup)</option> <option value="tbsp">Tablespoon (tbsp)</option> <option value="tsp">Teaspoon (tsp)</option> <option value="mL">Milliliter (mL)</option> <option value="fl_oz">Fluid Ounce (fl oz)</option> <option value="g">Gram (g)</option> <option value="oz">Ounce (oz)</option> <option value="lb">Pound (lb)</option> </select> </div> <div class="input-group"> <label for="toUnit">Convert To</label> <select id="toUnit"> <option value="g" selected>Gram (g)</option> <option value="cup">Cup (cup)</option> <option value="tbsp">Tablespoon (tbsp)</option> <option value="tsp">Teaspoon (tsp)</option> <option value="mL">Milliliter (mL)</option> <option value="fl_oz">Fluid Ounce (fl oz)</option> <option value="oz">Ounce (oz)</option> <option value="lb">Pound (lb)</option> </select> </div> </div> <div class="input-group"> <label for="ingredient">1. Select Ingredient</label> <select id="ingredient"></select> </div> <div class="input-group"> <label for="brand">2. Select Brand</label> <select id="brand"></select> </div> <!-- CONTAINER FOR THE CUP SIZE QUESTION --> <div class="input-group" id="cup-type-container"> <label for="cupType">3. Measuring Cup Standard</label> <select id="cupType"> <option value="usCustomary">US Customary Cup (236.588 mL)</option> <option value="usLegal">US Legal Cup (240 mL)</option> <option value="metric">Metric Cup / Modern UK (250 mL)</option> <option value="imperial">Imperial Cup / Vintage UK (284.131 mL)</option> <option value="australian">Australian Cup (250 mL)</option> </select> </div> <div class="input-group"> <label id="input-label" for="volume">4. Amount</label> <input type="number" id="volume" value="1" min="0" step="0.25"> </div> <!-- THE INSTANT RESULT DISPLAY --> <div class="result-box"> <span id="output-value">120</span> <span id="output-unit" class="unit">grams</span> </div> </main> <!-- Bottom Ad Placement Spacer --> <div class="ad-container bottom-ad"> <p class="ad-label">Advertisement</p> <div class="ad-mock">[ 300x250 Lower Banner Ad Place ]</div> </div>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
