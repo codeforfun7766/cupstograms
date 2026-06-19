@@ -1,1 +1,255 @@
-// 1. INGREDIENT & BRAND DATABASE FROM YOUR IMAGE const ingredientDatabase = { coconutFlour: { name: "Coconut Flour", brands: { "Standard / Average": 112, "Bob's Red Mill": 112, "Arrowhead Mills": 120 } }, allPurposeFlour: { name: "All-Purpose Flour", brands: { "King Arthur (Standard)": 120, "Gold Medal": 125, "Pillsbury": 122, "White Lily": 115 } }, breadFlour: { name: "Bread Flour", brands: { "King Arthur": 120, "Gold Medal": 128, "Bob's Red Mill": 135 } }, cakeFlour: { name: "Cake Flour", brands: { "Swans Down (Sifted)": 100, "King Arthur": 113, "Pillsbury Softasilk": 114 } }, wholeWheatFlour: { name: "Whole Wheat Flour", brands: { "King Arthur": 113, "Gold Medal": 120, "Bob's Red Mill": 120 } }, sugar: { name: "Granulated Sugar", brands: { "Domino / C&H": 200, "Imperial Sugar": 198, "Standard Store Brand": 200 } }, brownSugar: { name: "Brown Sugar (Packed)", brands: { "Domino (Packed)": 213, "C&H (Packed)": 215, "Lightly Packed Average": 200 } }, powderedSugar: { name: "Powdered Sugar", brands: { "Domino Confectioners": 120, "C&H Powdered Sugar": 120, "Generic Heavy Unsifted": 130 } }, butter: { name: "Butter", brands: { "Land O'Lakes / Stick": 227, "Kerrygold (European)": 232, "Plugra": 229 } }, cocoaPowder: { name: "Cocoa Powder", brands: { "Hershey's Natural Cocoa": 86, "Droste Dutch-Process": 92, "Ghirardelli Unsweetened": 88 } }, milk: { name: "Milk", brands: { "Whole Milk (Standard)": 244, "Skim Milk": 245, "Buttermilk": 242 } }, water: { name: "Water", brands: { "Pure Water (Standard)": 236.6 } }, honey: { name: "Honey", brands: { "Standard Pure Honey": 340 } }, vegetableOil: { name: "Vegetable Oil", brands: { "Standard Cooking Oil": 218 } }, rolledOats: { name: "Rolled Oats", brands: { "Quaker Old Fashioned": 90 } }, whiteRice: { name: "White Rice (Uncooked)", brands: { "Long Grain White Rice": 185, "Jasmine Rice": 190 } }, nutsChopped: { name: "Nuts (Chopped)", brands: { "Walnuts / Pecans": 115, "Almonds": 140, "Peanuts": 150 } }, chocolateChips: { name: "Chocolate Chips", brands: { "Nestle Toll House": 170, "Ghirardelli": 160 } }, bakingPowder: { name: "Baking Powder", brands: { "Standard Brand": 192 } }, bakingSoda: { name: "Baking Soda", brands: { "Arm & Hammer": 240 } }, salt: { name: "Salt", brands: { "Morton Table Salt": 300, "Morton Kosher Salt": 240, "Diamond Crystal Kosher": 150 } }, activeDryYeast: { name: "Active Dry Yeast", brands: { "Fleischmann's / Red Star": 140 } }, vanillaExtract: { name: "Vanilla Extract", brands: { "Standard Extract": 224 } }, creamCheese: { name: "Cream Cheese", brands: { "Philadelphia Block": 232 } }, heavyCream: { name: "Heavy Cream", brands: { "Standard Heavy Cream": 238 } }, cornstarch: { name: "Cornstarch", brands: { "Argo / Standard": 128 } }, mapleSyrup: { name: "Maple Syrup", brands: { "Pure Maple Syrup": 322 } }, sourCream: { name: "Sour Cream", brands: { "Standard Full Fat": 240 } }, molasses: { name: "Molasses", brands: { "Grandma's Molasses": 328 } }, coconutOil: { name: "Coconut Oil", brands: { "Melted Coconut Oil": 218, "Solid Packed": 230 } }, almondFlour: { name: "Almond Flour", brands: { "Bob's Red Mill": 112, "Blue Diamond": 112, "Kirkland (Costco)": 116 } } }; const cupVolumes = { usCustomary: 236.588, usLegal: 240, metric: 250, imperial: 284.131, australian: 250 }; // CONNECT ELEMENTS const fromUnitSelect = document.getElementById('fromUnit'); const toUnitSelect = document.getElementById('toUnit'); const ingredientSelect = document.getElementById('ingredient'); const brandSelect = document.getElementById('brand'); const cupTypeSelect = document.getElementById('cupType'); const cupTypeContainer = document.getElementById('cup-type-container'); const volumeInput = document.getElementById('volume'); const inputLabel = document.getElementById('input-label'); const outputValue = document.getElementById('output-value'); const outputUnit = document.getElementById('output-unit'); function initializeCalculator() { ingredientSelect.innerHTML = ''; for (let key in ingredientDatabase) { let opt = document.createElement('option'); opt.value = key; opt.innerHTML = ingredientDatabase[key].name; ingredientSelect.appendChild(opt); } updateAvailableBrands(); } function updateAvailableBrands() { const selectedIngredientKey = ingredientSelect.value; brandSelect.innerHTML = ''; const brandsList = ingredientDatabase[selectedIngredientKey].brands; for (let brandName in brandsList) { let opt = document.createElement('option'); opt.value = brandName; opt.innerHTML = brandName; brandSelect.appendChild(opt); } runUniversalMath(); } // THE UNIVERSAL MULTI-UNIT MATHEMATICAL ENGINE function runUniversalMath() { const fromUnit = fromUnitSelect.value; const toUnit = toUnitSelect.value; const ingredient = ingredientSelect.value; const brand = brandSelect.value; const inputValue = parseFloat(volumeInput.value) || 0; // 1. Manage Cup Type Box Visibility if (fromUnit === 'cup' || toUnit === 'cup' || fromUnit === 'tbsp' || toUnit === 'tbsp' || fromUnit === 'tsp' || toUnit === 'tsp') { cupTypeContainer.style.display = "block"; } else { cupTypeContainer.style.display = "none"; } // Set the clean input context label text inputLabel.innerHTML = `4. Enter Value (${fromUnit})`; // 2. Determine Cup Size Context (in Milliliters) const currentCupML = cupVolumes[cupTypeSelect.value]; const baselineGramsPerCup = ingredientDatabase[ingredient].brands[brand]; // Convert volume ratios relative to our database baseline cup size (236.588 mL) const volMultipliersToCup = { cup: 1, tbsp: 1 / 16, tsp: 1 / 48, mL: 1 / currentCupML, fl_oz: 1 / (currentCupML / 8) }; // Weight constants relative to grams const massToGrams = { g: 1, oz: 28.3495, lb: 453.592 }; let gramsPivot = 0; // STEP A: Convert input unit down to our base denominator (Grams) if (massToGrams[fromUnit]) { // Input is already a mass unit gramsPivot = inputValue * massToGrams[fromUnit]; } else { // Input is a volume unit, convert to baseline cups first const calculatedCups = inputValue * volMultipliersToCup[fromUnit] * (currentCupML / 236.588); gramsPivot = calculatedCups * baselineGramsPerCup; } // STEP B: Convert the baseline Grams up into the desired final target unit let finalCalculatedOutput = 0; if (massToGrams[toUnit]) { // Output is a mass unit finalCalculatedOutput = gramsPivot / massToGrams[toUnit]; } else { // Output is a volume unit, convert from grams using density const totalBaseCups = gramsPivot / baselineGramsPerCup; const localizedCups = totalBaseCups / (currentCupML / 236.588); finalCalculatedOutput = localizedCups / volMultipliersToCup[toUnit]; } // Format decimal precision neatly depending on output size const precision = (toUnit === 'cup' || toUnit === 'lb') ? 2 : 1; outputValue.innerHTML = finalCalculatedOutput.toFixed(precision); outputUnit.innerHTML = toUnit; } // ATTACH DETECTIVE INTERACTION LISTENERS fromUnitSelect.addEventListener('change', runUniversalMath); toUnitSelect.addEventListener('change', runUniversalMath); ingredientSelect.addEventListener('change', updateAvailableBrands); brandSelect.addEventListener('change', runUniversalMath); cupTypeSelect.addEventListener('change', runUniversalMath); volumeInput.addEventListener('input', runUniversalMath); initializeCalculator();
+// 1. INGREDIENT & BRAND DATABASE FROM YOUR IMAGE
+const ingredientDatabase = {
+  coconutFlour: {
+    name: "Coconut Flour",
+    brands: { "Standard / Average": 112, "Bob's Red Mill": 112, "Arrowhead Mills": 120 }
+  },
+  allPurposeFlour: {
+    name: "All-Purpose Flour",
+    brands: { "King Arthur (Standard)": 120, "Gold Medal": 125, "Pillsbury": 122, "White Lily": 115 }
+  },
+  breadFlour: {
+    name: "Bread Flour",
+    brands: { "King Arthur": 120, "Gold Medal": 128, "Bob's Red Mill": 135 }
+  },
+  cakeFlour: {
+    name: "Cake Flour",
+    brands: { "Swans Down (Sifted)": 100, "King Arthur": 113, "Pillsbury Softasilk": 114 }
+  },
+  wholeWheatFlour: {
+    name: "Whole Wheat Flour",
+    brands: { "King Arthur": 113, "Gold Medal": 120, "Bob's Red Mill": 120 }
+  },
+  sugar: {
+    name: "Granulated Sugar",
+    brands: { "Domino / C&H": 200, "Imperial Sugar": 198, "Standard Store Brand": 200 }
+  },
+  brownSugar: {
+    name: "Brown Sugar (Packed)",
+    brands: { "Domino (Packed)": 213, "C&H (Packed)": 215, "Lightly Packed Average": 200 }
+  },
+  powderedSugar: {
+    name: "Powdered Sugar",
+    brands: { "Domino Confectioners": 120, "C&H Powdered Sugar": 120, "Generic Heavy Unsifted": 130 }
+  },
+  butter: {
+    name: "Butter",
+    brands: { "Land O'Lakes / Stick": 227, "Kerrygold (European)": 232, "Plugra": 229 }
+  },
+  cocoaPowder: {
+    name: "Cocoa Powder",
+    brands: { "Hershey's Natural Cocoa": 86, "Droste Dutch-Process": 92, "Ghirardelli Unsweetened": 88 }
+  },
+  milk: {
+    name: "Milk",
+    brands: { "Whole Milk (Standard)": 244, "Skim Milk": 245, "Buttermilk": 242 }
+  },
+  water: {
+    name: "Water",
+    brands: { "Pure Water (Standard)": 236.6 }
+  },
+  honey: {
+    name: "Honey",
+    brands: { "Standard Pure Honey": 340 }
+  },
+  vegetableOil: {
+    name: "Vegetable Oil",
+    brands: { "Standard Cooking Oil": 218 }
+  },
+  rolledOats: {
+    name: "Rolled Oats",
+    brands: { "Quaker Old Fashioned": 90 }
+  },
+  whiteRice: {
+    name: "White Rice (Uncooked)",
+    brands: { "Long Grain White Rice": 185, "Jasmine Rice": 190 }
+  },
+  nutsChopped: {
+    name: "Nuts (Chopped)",
+    brands: { "Walnuts / Pecans": 115, "Almonds": 140, "Peanuts": 150 }
+  },
+  chocolateChips: {
+    name: "Chocolate Chips",
+    brands: { "Nestle Toll House": 170, "Ghirardelli": 160 }
+  },
+  bakingPowder: {
+    name: "Baking Powder",
+    brands: { "Standard Brand": 192 }
+  },
+  bakingSoda: {
+    name: "Baking Soda",
+    brands: { "Arm & Hammer": 240 }
+  },
+  salt: {
+    name: "Salt",
+    brands: { "Morton Table Salt": 300, "Morton Kosher Salt": 240, "Diamond Crystal Kosher": 150 }
+  },
+  activeDryYeast: {
+    name: "Active Dry Yeast",
+    brands: { "Fleischmann's / Red Star": 140 }
+  },
+  vanillaExtract: {
+    name: "Vanilla Extract",
+    brands: { "Standard Extract": 224 }
+  },
+  creamCheese: {
+    name: "Cream Cheese",
+    brands: { "Philadelphia Block": 232 }
+  },
+  heavyCream: {
+    name: "Heavy Cream",
+    brands: { "Standard Heavy Cream": 238 }
+  },
+  cornstarch: {
+    name: "Cornstarch",
+    brands: { "Argo / Standard": 128 }
+  },
+  mapleSyrup: {
+    name: "Maple Syrup",
+    brands: { "Pure Maple Syrup": 322 }
+  },
+  sourCream: {
+    name: "Sour Cream",
+    brands: { "Standard Full Fat": 240 }
+  },
+  molasses: {
+    name: "Molasses",
+    brands: { "Grandma's Molasses": 328 }
+  },
+  coconutOil: {
+    name: "Coconut Oil",
+    brands: { "Melted Coconut Oil": 218, "Solid Packed": 230 }
+  },
+  almondFlour: {
+    name: "Almond Flour",
+    brands: { "Bob's Red Mill": 112, "Blue Diamond": 112, "Kirkland (Costco)": 116 }
+  }
+};
+
+const cupVolumes = {
+  usCustomary: 236.588,
+  usLegal: 240,
+  metric: 250,
+  imperial: 284.131,
+  australian: 250
+};
+
+// CONNECT ELEMENTS
+const fromUnitSelect = document.getElementById('fromUnit');
+const toUnitSelect = document.getElementById('toUnit');
+const ingredientSelect = document.getElementById('ingredient');
+const brandSelect = document.getElementById('brand');
+const cupTypeSelect = document.getElementById('cupType');
+const cupTypeContainer = document.getElementById('cup-type-container');
+const volumeInput = document.getElementById('volume');
+const inputLabel = document.getElementById('input-label');
+const outputValue = document.getElementById('output-value');
+const outputUnit = document.getElementById('output-unit');
+
+function initializeCalculator() {
+  ingredientSelect.innerHTML = ''; 
+  for (let key in ingredientDatabase) {
+    let opt = document.createElement('option');
+    opt.value = key;
+    opt.innerHTML = ingredientDatabase[key].name;
+    ingredientSelect.appendChild(opt);
+  }
+  updateAvailableBrands();
+}
+
+function updateAvailableBrands() {
+  const selectedIngredientKey = ingredientSelect.value;
+  brandSelect.innerHTML = ''; 
+  const brandsList = ingredientDatabase[selectedIngredientKey].brands;
+  for (let brandName in brandsList) {
+    let opt = document.createElement('option');
+    opt.value = brandName;
+    opt.innerHTML = brandName;
+    brandSelect.appendChild(opt);
+  }
+  runUniversalMath();
+}
+
+// THE UNIVERSAL MULTI-UNIT MATHEMATICAL ENGINE
+function runUniversalMath() {
+  const fromUnit = fromUnitSelect.value;
+  const toUnit = toUnitSelect.value;
+  const ingredient = ingredientSelect.value;
+  const brand = brandSelect.value;
+  const inputValue = parseFloat(volumeInput.value) || 0;
+
+  if (fromUnit === 'cup' || toUnit === 'cup' || fromUnit === 'tbsp' || toUnit === 'tbsp' || fromUnit === 'tsp' || toUnit === 'tsp') {
+    cupTypeContainer.style.display = "block";
+  } else {
+    cupTypeContainer.style.display = "none";
+  }
+
+  inputLabel.innerHTML = `4. Enter Value (${fromUnit})`;
+
+  const currentCupML = cupVolumes[cupTypeSelect.value];
+  const baselineGramsPerCup = ingredientDatabase[ingredient].brands[brand];
+
+  const volMultipliersToCup = {
+    cup: 1,
+    tbsp: 1 / 16,
+    tsp: 1 / 48,
+    mL: 1 / currentCupML,
+    fl_oz: 1 / (currentCupML / 8)
+  };
+
+  const massToGrams = { g: 1, oz: 28.3495, lb: 453.592 };
+
+  let gramsPivot = 0;
+
+  if (massToGrams[fromUnit]) {
+    gramsPivot = inputValue * massToGrams[fromUnit];
+  } else {
+    const calculatedCups = inputValue * volMultipliersToCup[fromUnit] * (currentCupML / 236.588);
+    gramsPivot = calculatedCups * baselineGramsPerCup;
+  }
+
+  let finalCalculatedOutput = 0;
+
+  if (massToGrams[toUnit]) {
+    finalCalculatedOutput = gramsPivot / massToGrams[toUnit];
+  } else {
+    const totalBaseCups = gramsPivot / baselineGramsPerCup;
+    const localizedCups = totalBaseCups / (currentCupML / 236.588);
+    finalCalculatedOutput = localizedCups / volMultipliersToCup[toUnit];
+  }
+
+  const precision = (toUnit === 'cup' || toUnit === 'lb') ? 2 : 1;
+  outputValue.innerHTML = finalCalculatedOutput.toFixed(precision);
+  outputUnit.innerHTML = toUnit;
+}
+
+// CONTROL LOGIC FOR UK COMPLIANCE COOKIE POPUPS
+function togglePrivacyModal() {
+  const modal = document.getElementById('privacy-modal');
+  if (modal.style.display === "none" || modal.style.display === "") {
+    modal.style.display = "flex";
+  } else {
+    modal.style.display = "none";
+  }
+}
+
+function acceptCookies() {
+  document.getElementById('cookie-banner').style.display = 'none';
+  localStorage.setItem('cookiesAccepted', 'true');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('cookiesAccepted') === 'true') {
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+});
+
+// ATTACH DETECTIVE INTERACTION LISTENERS
+fromUnitSelect.addEventListener('change', runUniversalMath);
+toUnitSelect.addEventListener('change', runUniversalMath);
+ingredientSelect.addEventListener('change', updateAvailableBrands);
+brandSelect.addEventListener('change', runUniversalMath);
+cupTypeSelect.addEventListener('change', runUniversalMath);
+volumeInput.addEventListener('input', runUniversalMath);
+
+initializeCalculator();
